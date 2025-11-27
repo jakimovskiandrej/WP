@@ -1,0 +1,55 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+            <div class="container">
+    <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
+</div>
+</section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <form method="post"
+                      th:action="@{ ${dish != null} ? '/dishes/edit/' + ${dish.getId()} : '/dishes'}">
+                        <div class="form-group">
+                            <label for="dishId">Dish Id</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="dishId"
+                                   name="dishId"
+                                   th:value="${dish != null ? dish.getDishId() : ''}"
+                                   required
+                                   placeholder="Enter Dish Id">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Dish Name</label>
+                        <input type="text"
+                               class="form-control"
+                               id="name"
+                               name="name"
+                               th:value="${dish?.getName()}"
+                               placeholder="Enter Dish Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="cuisine">Cuisine</label>
+                        <input type="text"
+                               class="form-control"
+                               id="cuisine"
+                               name="cuisine"
+                               th:value="${dish?.getCuisine()}"
+                               placeholder="Enter Dish Cuisine">
+                    </div>
+                    <div class="form-group">
+                        <label for="preparationTime">Preparation Time</label>
+                        <input type="number"
+                               class="form-control"
+                               id="preparationTime"
+                               name="preparationTime"
+                               th:value="${dish?.getPreparationTime()}"
+                               placeholder="Enter Dish Preparation Time">
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                    <a type="button" class="btn btn-primary" href="/dishes">Back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

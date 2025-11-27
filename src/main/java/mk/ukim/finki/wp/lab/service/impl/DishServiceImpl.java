@@ -25,4 +25,41 @@ public class DishServiceImpl implements DishService {
     public Dish findByDishId(String dishId) {
         return this.dishRepository.findByDishId(dishId);
     }
+
+    @Override
+    public Dish findById(Long id) {
+        return this.dishRepository.findById(id);
+    }
+
+    @Override
+    public Dish create(String dishId, String name, String cuisine, int preparationTime) {
+        Dish existing = this.findByDishId(dishId);
+        if (existing == null) {
+            existing = new Dish(dishId, name, cuisine, preparationTime);
+        } else {
+            dishRepository.deleteById(existing.getId());
+        }
+        return this.dishRepository.save(existing);
+    }
+
+    @Override
+    public Dish update(Long id, String dishId, String name, String cuisine, int preparationTime) {
+        Dish dish = this.findByDishId(dishId);
+        if (dish == null) {
+            throw new IllegalArgumentException("Dish not found!");
+        }
+        dish.setDishId(dishId);
+        dish.setName(name);
+        dish.setCuisine(cuisine);
+        dish.setPreparationTime(preparationTime);
+        return this.dishRepository.save(dish);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Dish dish = this.findById(id);
+        if (dish != null) {
+            dishRepository.deleteById(id);
+        }
+    }
 }
