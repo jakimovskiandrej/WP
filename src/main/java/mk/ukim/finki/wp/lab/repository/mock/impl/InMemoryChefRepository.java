@@ -1,8 +1,8 @@
-package mk.ukim.finki.wp.lab.repository.impl;
+package mk.ukim.finki.wp.lab.repository.mock.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.DataHolder;
 import mk.ukim.finki.wp.lab.model.Chef;
-import mk.ukim.finki.wp.lab.repository.ChefRepository;
+import mk.ukim.finki.wp.lab.repository.mock.ChefRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,5 +30,10 @@ public class InMemoryChefRepository implements ChefRepository {
         }
         DataHolder.chefs.add(chef);
         return chef;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        DataHolder.chefs.removeIf(chef -> chef.getId().equals(id));
     }
 }

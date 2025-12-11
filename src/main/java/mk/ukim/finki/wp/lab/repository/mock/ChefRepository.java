@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.mock;
 
 import mk.ukim.finki.wp.lab.model.Chef;
 
@@ -9,4 +9,5 @@ public interface ChefRepository {
     List<Chef> findAll();
     Optional<Chef> findById(Long id);
     Chef save(Chef chef);
+    void deleteById(Long id);
 }

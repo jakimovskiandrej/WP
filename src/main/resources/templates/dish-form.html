@@ -8,17 +8,7 @@
         <div class="row">
             <div class="col-md-5">
                 <form method="post"
-                      th:action="@{ ${dish != null} ? '/dishes/edit/' + ${dish.getId()} : '/dishes'}">
-                        <div class="form-group">
-                            <label for="dishId">Dish Id</label>
-                            <input type="text"
-                                   class="form-control"
-                                   id="dishId"
-                                   name="dishId"
-                                   th:value="${dish != null ? dish.getDishId() : ''}"
-                                   required
-                                   placeholder="Enter Dish Id">
-                    </div>
+                      th:action="@{ ${dish != null} ? '/dishes/edit/' + ${dish.getId()} : '/dishes/addDish'}">
                     <div class="form-group">
                         <label for="name">Dish Name</label>
                         <input type="text"
@@ -45,6 +35,14 @@
                                name="preparationTime"
                                th:value="${dish?.getPreparationTime()}"
                                placeholder="Enter Dish Preparation Time">
+                    </div>
+                    <div class="form-group">
+                        <label>Select chef</label>
+                        <select name="chef">
+                            <option th:each="c : ${chefs}" th:value="${c.getId()}" th:text="${c.getFirstName()}">
+
+                            </option>
+                        </select>
                     </div>
                     <button id="submit" type="submit" class="btn btn-primary">Submit</button>
                     <a type="button" class="btn btn-primary" href="/dishes">Back</a>
