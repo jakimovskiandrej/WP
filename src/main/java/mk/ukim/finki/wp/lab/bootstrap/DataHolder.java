@@ -24,7 +24,9 @@ public class DataHolder {
 
     @PostConstruct
     public void init() {
-//        chefRepository.save(new Chef("Andrej","sdaasd","jahahhaha"));
+        chefRepository.save(new Chef("Andrej","sdaasd","jahahhaha"));
+        chefRepository.save(new Chef("Chef2","c2","b2"));
+        chefRepository.save(new Chef("Chef3","c3","b3"));
     }
 
 }

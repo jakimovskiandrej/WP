@@ -1,4 +1,4 @@
-<div xmlns:th="http://www.thymeleaf.org">
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">WEB PROGRAMMING SHOP</h1>
@@ -27,7 +27,7 @@
                             <td th:text="${dish.getCuisine()}"></td>
                             <td th:text="${dish.getPreparationTime()}"></td>
                             <td class="text-right">
-                                <th:block>
+                                <th:block sec:authorize="hasRole('ADMIN')">
                                     <form th:action="@{'/dishes/delete/{id}' (id=${dish.getId()})}"
                                           th:method="POST">
                                         <button type="submit"
@@ -35,8 +35,6 @@
                                             <i class="fa fa-trash">Delete</i>
                                         </button>
                                     </form>
-                                </th:block>
-                                <th:block>
                                     <a th:href="@{'/dishes/dish-form/{id}' (id=${dish.getId()})}"
                                        class="btn btn-sm btn-info edit-dish">
                                         <i class="fa fa-trash">Edit</i>
@@ -48,7 +46,7 @@
                     </table>
                 </div>
             </div>
-            <div class="col mb-3">
+            <div class="col mb-3" sec:authorize="hasRole('ADMIN')">
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
                         <a href="/dishes/dish-form" class="btn btn-block btn-dark add-dish-btn">

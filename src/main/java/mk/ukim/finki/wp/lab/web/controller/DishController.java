@@ -1,17 +1,11 @@
 package mk.ukim.finki.wp.lab.web.controller;
-import mk.ukim.finki.wp.lab.model.Chef;
-import mk.ukim.finki.wp.lab.model.Dish;
 import mk.ukim.finki.wp.lab.repository.jpa.ChefRepository;
 import mk.ukim.finki.wp.lab.service.ChefService;
 import mk.ukim.finki.wp.lab.service.DishService;
-import mk.ukim.finki.wp.lab.repository.jpa.DishRepository;
-import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.data.domain.Sort;
 
 @Controller
 @RequestMapping("/dishes")
@@ -19,12 +13,10 @@ public class DishController {
 
     private final DishService dishService;
     private final ChefService chefService;
-    private final ChefRepository chefRepository;
 
-    public DishController(DishService dishService, ChefService chefService, ChefRepository chefRepository) {
+    public DishController(DishService dishService, ChefService chefService) {
         this.dishService = dishService;
         this.chefService = chefService;
-        this.chefRepository = chefRepository;
     }
 
     @GetMapping
@@ -34,14 +26,13 @@ public class DishController {
         if (error != null) {
             model.addAttribute("error", error);
         }
-
-        List<Dish> dishes;
         model.addAttribute("dishes", dishService.findAll());
         model.addAttribute("bodyContent", "listDishes");
         return "master-template";
     }
 
     @PostMapping("/addDish")
+    @PreAuthorize("hasRole('ADMIN')")
     public String saveDish(@RequestParam String name,
                            @RequestParam String cuisine,
                            @RequestParam int preparationTime,
@@ -51,6 +42,7 @@ public class DishController {
     }
 
     @PostMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editDish(@PathVariable Long id,
                            @RequestParam String name,
                            @RequestParam String cuisine,
@@ -60,12 +52,14 @@ public class DishController {
     }
 
     @PostMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteDish(@PathVariable Long id) {
         dishService.deleteById(id);
         return "redirect:/dishes";
     }
 
     @GetMapping("/dish-form/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String getEditDishForm(@PathVariable Long id, Model model) {
         if(dishService.findById(id) == null) {
             return "redirect:/dishes?error=DishNotFound.";
@@ -76,6 +70,7 @@ public class DishController {
     }
 
     @GetMapping("/dish-form")
+    @PreAuthorize("hasRole('ADMIN')")
     public String getAddDishPage(Model model) {
         model.addAttribute("bodyContent", "dish-form");
         model.addAttribute("chefs", chefService.findAll());
